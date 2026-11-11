@@ -1,42 +1,45 @@
 # Legacy Bridge
 
-Extensão para Chrome com um auxiliar para Windows. Ela abre a página da aba atual em uma janela separada com o controle WebBrowser/MSHTML, para ajudar no acesso a alguns sistemas legados.
+A Chrome extension and Windows helper for opening the current tab in a separate window that uses the Windows WebBrowser (MSHTML) engine. This can help with older websites that do not work correctly in modern browsers.
 
-## Requisitos
+## What you need
 
-- Windows 10 ou 11 com .NET Framework e o componente WebBrowser/MSHTML disponíveis.
+- Windows 10 or 11 with .NET Framework and the Windows WebBrowser component.
 - Google Chrome.
 - Windows PowerShell.
 
-## Instalação
+## Install
 
-1. Baixe ou clone este repositório no computador Windows.
-2. No Chrome, abra `chrome://extensions`, ative **Modo do desenvolvedor** e clique em **Carregar sem compactação**. Selecione a pasta `extension`.
-3. Abra o PowerShell na pasta do projeto e execute, uma linha por vez:
+1. On this GitHub page, click the green **Code** button, then choose **Download ZIP**.
+2. In File Explorer, open the downloaded ZIP and select **Extract All**. Open the extracted `LegacyBridgeTab-main` folder.
+3. In Chrome, go to `chrome://extensions`, turn on **Developer mode**, and click **Load unpacked**. Select the `extension` folder inside `LegacyBridgeTab-main`.
+4. In File Explorer, open the extracted `LegacyBridgeTab-main` folder. Click the address bar, type `powershell`, and press **Enter**.
+5. In the PowerShell window, run these commands one at a time:
 
    ```powershell
    .\build.ps1
    .\install.ps1
    ```
 
-4. Se o sistema Hikvision solicitar o plug-in Web Components, obtenha-o diretamente do fornecedor e instale a versão adequada ao seu equipamento. O instalador proprietário não está incluído neste repositório.
-5. Reinicie o Chrome, abra o site e clique no ícone **Legacy Bridge**.
+6. Restart Chrome, open the website, and click the **Legacy Bridge** extension icon.
 
-## Scripts
+If the Hikvision system asks for its Web Components plug-in, obtain the correct version from your organization or the equipment vendor. The proprietary installer is not included in this repository.
 
-- `build.ps1`: compila os programas auxiliares a partir do código em `native/`.
-- `install.ps1`: instala o auxiliar no perfil atual do Windows e registra a extensão para comunicação local.
-- `uninstall.ps1`: remove o registro e os arquivos instalados.
+## What the scripts do
 
-## Privacidade
+- `build.ps1` compiles the Windows helper programs from the source code in `native/`.
+- `install.ps1` installs the helper for the current Windows user and connects it to the extension.
+- `uninstall.ps1` removes the helper and its registration.
 
-A extensão solicita as permissões `activeTab` e `nativeMessaging`. Depois do clique, ela envia ao auxiliar o endereço da aba atual. O auxiliar aceita somente endereços HTTP e HTTPS. O projeto não lê arquivos locais nem envia o conteúdo da página.
+## Privacy
 
-## Limitações
+The extension requests the `activeTab` and `nativeMessaging` permissions. When you click its button, it sends the current tab's web address to the Windows helper. The helper accepts only HTTP and HTTPS addresses. It does not read local files or send page contents.
 
-- A página abre em uma janela própria, fora da aba do Chrome.
-- A compatibilidade depende da versão do Windows e do site.
-- Pop-ups são bloqueados nesta versão.
-- ActiveX, Java e Silverlight não são incluídos nem garantidos.
-- O MSHTML é antigo. Use apenas com sites confiáveis e de acordo com as regras da sua organização.
-- Projeto independente, sem afiliação com a Hikvision.
+## Limitations
+
+- The website opens in a separate Windows window, not inside the Chrome tab.
+- Compatibility depends on Windows and the website.
+- Pop-ups are blocked.
+- ActiveX, Java, and Silverlight are not included or guaranteed.
+- MSHTML is an old browser engine. Use it only with trusted websites and follow your organization's security rules.
+- This independent project is not affiliated with Hikvision.
