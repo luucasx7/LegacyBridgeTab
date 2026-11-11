@@ -23,7 +23,7 @@ A Chrome extension and Windows helper for opening the current tab in a separate 
 
 6. Restart Chrome, open the website, and click the **Legacy Bridge** extension icon.
 
-If the Hikvision system asks for its Web Components plug-in, obtain the correct version from your organization or the equipment vendor. The proprietary installer is not included in this repository.
+Legacy Bridge does not include website-specific plug-ins. If a site requires an additional component, obtain it from your organization or the official vendor and install only the version required by that site.
 
 ## What the scripts do
 
@@ -42,4 +42,3 @@ The extension requests the `activeTab` and `nativeMessaging` permissions. When y
 - Pop-ups are blocked.
 - ActiveX, Java, and Silverlight are not included or guaranteed.
 - MSHTML is an old browser engine. Use it only with trusted websites and follow your organization's security rules.
-- This independent project is not affiliated with Hikvision.
