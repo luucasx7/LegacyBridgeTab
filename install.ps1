@@ -1,12 +1,12 @@
 $ErrorActionPreference = "Stop"
 $ExtensionId = "hdikmfkbeihgblnheodfgkglddnohfaj"
 if ($ExtensionId -notmatch '^[a-p]{32}$') {
-  throw "ID fixo da extensão inválido. Verifique o manifest.json."
+  throw "Invalid fixed extension ID. Check manifest.json."
 }
 $sourceHost = Join-Path $PSScriptRoot "native\LegacyBridgeHost.exe"
 $sourceViewer = Join-Path $PSScriptRoot "native\LegacyBridgeViewer.exe"
 if (-not (Test-Path $sourceHost) -or -not (Test-Path $sourceViewer)) {
-  throw "Os auxiliares ainda não foram compilados. Execute build.ps1 primeiro."
+  throw "The helper programs have not been built yet. Run build.ps1 first."
 }
 $installDir = Join-Path $env:LOCALAPPDATA "Programs\LegacyBridge"
 New-Item -ItemType Directory -Force -Path $installDir | Out-Null
@@ -30,5 +30,5 @@ Set-Item -Path $registryPath -Value $manifestPath
 $featurePath = "HKCU:\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION"
 New-Item -Force -Path $featurePath | Out-Null
 New-ItemProperty -Path $featurePath -Name "LegacyBridgeViewer.exe" -PropertyType DWord -Value 11001 -Force | Out-Null
-Write-Host "Instalação concluída para a extensão $ExtensionId"
-Write-Host "Reinicie o Chrome para carregar o programa auxiliar."
+Write-Host "Installation completed for extension $ExtensionId"
+Write-Host "Restart Chrome to load the helper program."
