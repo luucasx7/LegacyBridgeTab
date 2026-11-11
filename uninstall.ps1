@@ -7,4 +7,4 @@ if (Test-Path $featurePath) {
 }
 $installDir = Join-Path $env:LOCALAPPDATA "Programs\LegacyBridge"
 if (Test-Path $installDir) { Remove-Item -Path $installDir -Recurse -Force }
-Write-Host "Legacy Bridge removido."
+Write-Host "Legacy Bridge has been removed."
