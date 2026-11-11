@@ -34,17 +34,17 @@ internal static class LegacyBridge
         {
             string origin = args.Length > 0 ? args[0] : "";
             if (!origin.StartsWith("chrome-extension://", StringComparison.Ordinal))
-                return WriteResponse(false, "Origem do Chrome inválida.");
+                return WriteResponse(false, "Invalid Chrome extension origin.");
 
             Stream input = Console.OpenStandardInput();
             byte[] header = ReadExact(input, 4);
             if (header == null) return 1;
             int length = BitConverter.ToInt32(header, 0);
             if (length < 1 || length > 1024 * 1024)
-                return WriteResponse(false, "Mensagem fora do limite permitido.");
+                return WriteResponse(false, "Message exceeds the allowed size.");
 
             byte[] body = ReadExact(input, length);
-            if (body == null) return WriteResponse(false, "Mensagem incompleta.");
+            if (body == null) return WriteResponse(false, "Incomplete message.");
             string json = Encoding.UTF8.GetString(body);
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             Dictionary<string, object> message =
@@ -52,18 +52,18 @@ internal static class LegacyBridge
 
             if (message == null || !message.ContainsKey("action") ||
                 !String.Equals(Convert.ToString(message["action"]), "open", StringComparison.Ordinal))
-                return WriteResponse(false, "Ação não reconhecida.");
+                return WriteResponse(false, "Unrecognized action.");
 
             string url = message.ContainsKey("url") ? Convert.ToString(message["url"]) : "";
             Uri uri;
             if (!IsWebUrl(url, out uri))
-                return WriteResponse(false, "Somente endereços http e https são aceitos.");
+                return WriteResponse(false, "Only HTTP and HTTPS addresses are allowed.");
 
             string encoded = Convert.ToBase64String(Encoding.UTF8.GetBytes(uri.AbsoluteUri));
             string hostExe = Process.GetCurrentProcess().MainModule.FileName;
             string viewerExe = Path.Combine(Path.GetDirectoryName(hostExe), "LegacyBridgeViewer.exe");
             if (!File.Exists(viewerExe))
-                return WriteResponse(false, "Não encontrei o visualizador auxiliar.");
+                return WriteResponse(false, "The Legacy Bridge viewer was not found.");
             ProcessStartInfo start = new ProcessStartInfo();
             start.FileName = viewerExe;
             start.Arguments = "--viewer64=" + encoded;
@@ -76,7 +76,7 @@ internal static class LegacyBridge
         }
         catch (Exception ex)
         {
-            return WriteResponse(false, "Falha no auxiliar: " + ex.Message);
+            return WriteResponse(false, "Legacy Bridge error: " + ex.Message);
         }
     }
 
@@ -120,7 +120,7 @@ internal sealed class BrowserWindow : Form
 
     public BrowserWindow(Uri initial)
     {
-        Text = "Legacy Bridge — janela de compatibilidade";
+        Text = "Legacy Bridge — Compatibility Window";
         Width = 1120;
         Height = 820;
         StartPosition = FormStartPosition.CenterScreen;
@@ -147,7 +147,7 @@ internal sealed class BrowserWindow : Form
         buttons.Controls.Add(forward);
         buttons.Controls.Add(refresh);
 
-        Button go = MakeButton("Ir");
+        Button go = MakeButton("Go");
         go.Dock = DockStyle.Right;
         go.Width = 42;
         go.Click += delegate { NavigateAddress(); };
@@ -173,7 +173,7 @@ internal sealed class BrowserWindow : Form
         {
             string pageTitle = browser.DocumentTitle;
             Text = String.IsNullOrEmpty(pageTitle)
-                ? "Legacy Bridge — janela de compatibilidade"
+                ? "Legacy Bridge — Compatibility Window"
                 : pageTitle + " — Legacy Bridge";
         };
 
@@ -213,7 +213,7 @@ internal sealed class BrowserWindow : Form
         if (!Uri.TryCreate(value, UriKind.Absolute, out uri) ||
             (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps))
         {
-            MessageBox.Show(this, "Use um endereço http ou https.", "Endereço não permitido",
+            MessageBox.Show(this, "Enter an HTTP or HTTPS address.", "Address Not Allowed",
                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
