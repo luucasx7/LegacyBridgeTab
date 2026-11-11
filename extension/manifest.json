@@ -2,11 +2,11 @@
   "manifest_version": 3,
   "name": "Legacy Bridge",
   "version": "0.2.0",
-  "description": "Abre a página atual numa janela auxiliar com o mecanismo MSHTML do Windows.",
+  "description": "Opens the current page in a separate window using the Windows MSHTML engine.",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApxEvVOQGEWqcnrXggbymZF+uPbjfHQ+LJIOTUNx56SQ0r+Qe8JEYdTS7lhrR6AlqFuXJomMhLumcEj1mOuxEpVLOoTUOExmQhJl1JjQxmd7nkNJCmGlPqC1brdieQ1/LSAO/Dp6HcHmgO8rKsFnPG4hTAIpyMVWCMzNU/bAcKiwi5W+DcAW1670olWIHFfK6jQoPzwL9SmFC001KmSLktMLkx8k4uyJuzgkNiLWCVoLsN+VxBlUsuKBn4G3EDq78L8oLmnRzO/f2JxG9AGUAzxqfdtJwJMlgVkbo8FXuoX+viXVbFmS2VHBUuWT8wuzNb10JHhJTgqdbEZt4dfDCDQIDAQAB",
   "permissions": ["activeTab", "nativeMessaging"],
   "action": {
-    "default_title": "Abrir com Legacy Bridge",
+    "default_title": "Open with Legacy Bridge",
     "default_popup": "popup.html"
   }
 }
